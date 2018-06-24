@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace Middlewares;
 
 use InvalidArgumentException;
+use League\Csv\Reader;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use SplTempFileObject;
 
 class CsvPayload extends Payload implements MiddlewareInterface
 {
@@ -35,6 +35,13 @@ class CsvPayload extends Payload implements MiddlewareInterface
      * @var string
      */
     protected $escape = '\\';
+
+    /**
+     * The offset to use as the header.
+     *
+     * @var int|null
+     */
+    protected $header;
 
     /**
      * Set Csv Control delimiter character
@@ -67,11 +74,21 @@ class CsvPayload extends Payload implements MiddlewareInterface
     }
 
     /**
+     * Set the Csv header offset
+     */
+    public function header(?int $offset): self
+    {
+        $this->header = self::filterHeader($offset);
+
+        return $this;
+    }
+
+    /**
      * Filter Csv control character
      */
     private static function filterControl(string $char, string $type): string
     {
-        if (1 == strlen($char)) {
+        if (strlen($char) === 1) {
             return $char;
         }
 
@@ -79,15 +96,30 @@ class CsvPayload extends Payload implements MiddlewareInterface
     }
 
     /**
+     * Filter Csv header offset
+     */
+    private static function filterHeader(int $header): int
+    {
+        if ($header >= 0) {
+            return $header;
+        }
+
+        throw new InvalidArgumentException('The header must be greater than or equal to zero');
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function parse(StreamInterface $stream): array
     {
-        $csv = new SplTempFileObject();
-        $csv->fwrite((string) $stream);
-        $csv->setFlags(SplTempFileObject::READ_CSV);
-        $csv->setCsvControl($this->delimiter, $this->enclosure, $this->escape);
+        $csv = Reader::createFromString((string) $stream);
+        $csv->setDelimiter($this->delimiter);
+        $csv->setEnclosure($this->enclosure);
+        $csv->setEscape($this->escape);
+        $csv->setHeaderOffset($this->header);
 
-        return iterator_to_array($csv);
+        // Pass through array_values() to ensure that the resulting array
+        // starts with an index of zero.
+        return array_values(iterator_to_array($csv->getRecords()));
     }
 }

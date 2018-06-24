@@ -1,7 +1,7 @@
 {
-    "name": "middlewares/payload",
+    "name": "middlewares/csv-payload",
     "type": "library",
-    "description": "Middleware to parse the body of the request with support for json, csv and url-encode",
+    "description": "Middleware to parse the CSV body of the request",
     "license": "MIT",
     "keywords": [
         "psr-7",
@@ -9,17 +9,17 @@
         "middleware",
         "server",
         "http",
-        "json",
         "csv",
-        "url-encode",
         "payload"
     ],
-    "homepage": "https://github.com/middlewares/payload",
+    "homepage": "https://github.com/middlewares/csv-payload",
     "support": {
-        "issues": "https://github.com/middlewares/payload/issues"
+        "issues": "https://github.com/middlewares/csv-payload/issues"
     },
     "require": {
         "php": "^7.0",
+        "league/csv": "^9.0",
+        "middlewares/payload": "^1.0",
         "middlewares/utils": "^1.0",
         "psr/http-server-middleware": "^1.0"
     },

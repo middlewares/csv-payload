@@ -2,8 +2,7 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
-[![Quality Score][ico-scrutinizer]][link-scrutinizer]
+![Testing][ico-ga]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 Extends [middlewares/payload][link-payload] to add support for parsing the CSV body of the request.
@@ -73,12 +72,10 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/middlewares/csv-payload.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/middlewares/csv-payload/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/g/middlewares/csv-payload.svg?style=flat-square
+[ico-ga]: https://github.com/middlewares/csv-payload/workflows/testing/badge.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/middlewares/csv-payload.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/middlewares/csv-payload
-[link-travis]: https://travis-ci.org/middlewares/csv-payload
 [link-scrutinizer]: https://scrutinizer-ci.com/g/middlewares/csv-payload
 [link-downloads]: https://packagist.org/packages/middlewares/csv-payload
 [link-payload]: https://packagist.org/packages/middlewares/payload

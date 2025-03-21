@@ -76,7 +76,7 @@ class CsvPayload extends Payload implements MiddlewareInterface
      */
     public function header(?int $offset): self
     {
-        $this->header = self::filterHeader($offset);
+        $this->header = self::filterHeader((int) $offset);
 
         return $this;
     }

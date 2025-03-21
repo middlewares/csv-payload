@@ -10,9 +10,7 @@ use Psr\Http\Server\MiddlewareInterface;
 
 class CsvPayload extends Payload implements MiddlewareInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array<string> */
     protected $contentType = ['text/csv'];
 
     /**
@@ -78,7 +76,7 @@ class CsvPayload extends Payload implements MiddlewareInterface
      */
     public function header(?int $offset): self
     {
-        $this->header = self::filterHeader($offset);
+        $this->header = self::filterHeader((int) $offset);
 
         return $this;
     }
@@ -109,6 +107,7 @@ class CsvPayload extends Payload implements MiddlewareInterface
 
     /**
      * {@inheritdoc}
+     * @return array<array<string, string|int|float>>
      */
     protected function parse(StreamInterface $stream): array
     {

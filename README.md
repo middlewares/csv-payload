@@ -76,7 +76,6 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 [ico-downloads]: https://img.shields.io/packagist/dt/middlewares/csv-payload.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/middlewares/csv-payload
-[link-scrutinizer]: https://scrutinizer-ci.com/g/middlewares/csv-payload
 [link-downloads]: https://packagist.org/packages/middlewares/csv-payload
 [link-payload]: https://packagist.org/packages/middlewares/payload
 [link-csv]: https://packagist.org/packages/league/csv

@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
+use Closure;
 use InvalidArgumentException;
 use Middlewares\CsvPayload;
 use Middlewares\Utils\Dispatcher;
@@ -13,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class CsvPayloadTest extends TestCase
 {
-    public function testOptions()
+    public function testOptions(): void
     {
         // Mock
         $payload = (new CsvPayload())
@@ -40,11 +41,15 @@ class CsvPayloadTest extends TestCase
                     ['Name' => 'Fred Franklin', 'Position' => 'janitor'],
                     ['Name' => 'Sally Smith', 'Position' => 'engineer'],
                 ];
+
                 $this->assertSame($expected, $request->getParsedBody());
-            }
+            },
         ]);
     }
 
+    /**
+     * @return array<string,array<string>>
+     */
     public function dataInvalidControlCharacter(): array
     {
         return [
@@ -58,7 +63,7 @@ class CsvPayloadTest extends TestCase
     /**
      * @dataProvider dataInvalidControlCharacter
      */
-    public function testInvalidDelimiter(string $control)
+    public function testInvalidDelimiter(string $control): void
     {
         // Expect
         $this->expectException(InvalidArgumentException::class);
@@ -71,7 +76,7 @@ class CsvPayloadTest extends TestCase
     /**
      * @dataProvider dataInvalidControlCharacter
      */
-    public function testInvalidEnclosure(string $control)
+    public function testInvalidEnclosure(string $control): void
     {
         // Expect
         $this->expectException(InvalidArgumentException::class);
@@ -84,7 +89,7 @@ class CsvPayloadTest extends TestCase
     /**
      * @dataProvider dataInvalidControlCharacter
      */
-    public function testInvalidEscape(string $control)
+    public function testInvalidEscape(string $control): void
     {
         // Expect
         $this->expectException(InvalidArgumentException::class);
@@ -94,7 +99,7 @@ class CsvPayloadTest extends TestCase
         (new CsvPayload())->escape($control);
     }
 
-    public function testInvalidHeader()
+    public function testInvalidHeader(): void
     {
         // Expect
         $this->expectException(InvalidArgumentException::class);
@@ -106,7 +111,7 @@ class CsvPayloadTest extends TestCase
 
     private function makeRequest(string $method, string $body, string $contentType = 'text/csv'): Request
     {
-        $request = Factory::createServerRequest([], $method)
+        $request = Factory::createServerRequest('POST', $method)
             ->withHeader('Content-Type', $contentType);
 
         $request->getBody()->write($body);
@@ -114,6 +119,9 @@ class CsvPayloadTest extends TestCase
         return $request;
     }
 
+    /**
+     * @param array<int, Closure|CsvPayload> $middleware
+     */
     private function dispatch(Request $request, array $middleware): Response
     {
         return Dispatcher::run($middleware, $request);

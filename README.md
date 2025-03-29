@@ -55,7 +55,7 @@ To override the previous parsed body if exists (`false` by default)
 
 ```php
 $dispatcher = new Dispatcher([
-    (new \Middlewares\Tests\CsvPayload())
+    (new \Middlewares\CsvPayload())
         ->delimiter(";")
         ->enclosure("'")
         ->escape("\\")
